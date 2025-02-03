@@ -1,0 +1,77 @@
+/* Light theme styles */
+.light-theme {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --input-bg-color: #f0f0f0;
+  --input-text-color: #000000;
+  --input-placeholder-color: #888888; /* Placeholder text color */
+  --button-bg-color: #cccccc;
+  --button-hover-bg-color: #bbbbbb;
+  --div-bg-color: #ffffff; /* Background color for the signup div in light theme */
+}
+
+/* Dark theme styles */
+.dark-theme {
+  --bg-color: #333333;
+  --text-color: #ffffff;
+  --input-bg-color: #666666; 
+  --input-text-color: #ffffff;
+  --input-placeholder-color: #ffffff; 
+  --button-bg-color: #555555; 
+  --button-hover-bg-color: #666666;
+  --div-bg-color: #444444; 
+}
+
+.theme-container {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input {
+  background-color: var(--input-bg-color);
+  color: var(--input-text-color);
+}
+
+input::placeholder {
+  color: var(--input-placeholder-color);
+}
+
+button {
+  background-color: var(--button-bg-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--button-hover-bg-color);
+}
+
+.signup-div,
+.signin-div {
+  background-color: var(--div-bg-color);
+  color: var(--text-color);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: var(--text-color); /* Ensures "Sign Up" and "Sign In" text color is adjustable */
+}
+
+/* Existing CSS for theme styles */
+
+.theme-toggle img {
+  width: 40px;
+  height: 40px;
+}
+

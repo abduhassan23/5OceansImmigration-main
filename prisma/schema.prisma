@@ -1,0 +1,99 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  email            String         @unique
+  firebaseUID      String?        @unique
+  isAdmin          Boolean        @default(false)
+  files            File[]
+  threads          Thread[]       @relation("UserThreads")
+  posts            Post[]         @relation("UserPosts")
+  threadLikes      ThreadLikes[]  @relation("UserLikes")
+  notifications    Notification[]
+  formDataEntries  FormData[]     @relation("UserFormData")
+}
+
+model File {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String   @db.ObjectId 
+  fileHash String   @unique
+  name     String
+  User     User     @relation(fields: [userId], references: [id])
+  status   String   @default("pending evaluation")
+}
+
+model Thread {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  title       String   
+  content     String   
+  category    String   
+  userId      String        @db.ObjectId 
+  createdAt   DateTime      @default(now()) 
+  updatedAt   DateTime      @updatedAt 
+  likes       Int           @default(0) 
+  posts       Post[]   
+  User        User          @relation("UserThreads", fields: [userId], references: [id], onDelete: Cascade)
+  threadLikes ThreadLikes[] @relation("ThreadLikesOnThread")
+}
+
+model Post {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String   
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @updatedAt 
+  threadId  String   @db.ObjectId 
+  userId    String   @db.ObjectId 
+  Thread    Thread   @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  User      User     @relation("UserPosts", fields: [userId], references: [id], onDelete: Cascade) 
+}
+
+model ThreadLikes {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId 
+  threadId  String   @db.ObjectId
+  User      User     @relation("UserLikes", fields: [userId], references: [id])
+  Thread    Thread   @relation("ThreadLikesOnThread", fields: [threadId], references: [id])
+
+  @@unique([userId, threadId]) 
+}
+
+model Note {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  text      String
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Announcement {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Notification {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId 
+  content   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model FormData {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String?  @db.ObjectId // Optional: Link to User ID
+  firebaseUID String?  @db.String  // Store firebaseUID if you want
+  data        Json
+  createdAt   DateTime @default(now())
+  User        User?    @relation("UserFormData", fields: [userId], references: [id], onDelete: Cascade)
+}

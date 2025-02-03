@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body, html {
+  background: linear-gradient(to bottom, #f6f7f8, #dfe1e5);
+  overflow-x: hidden;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+body.dark-mode input {
+  color: #000000; 
+  background-color: #ffffff; 
+}
+
+body.light-mode input {
+  color: #000000; 
+  background-color: #ffffff; 
+}
+
+@keyframes float1 {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+@keyframes float2 {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(15px);
+  }
+}
+@keyframes float3 {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-25px);
+  }
+}
+@keyframes float4 {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(30px);
+  }
+}
+
+.animate-float1 {
+  animation: float1 6s ease-in-out infinite;
+}
+.animate-float2 {
+  animation: float2 8s ease-in-out infinite;
+}
+.animate-float3 {
+  animation: float3 10s ease-in-out infinite;
+}
+.animate-float4 {
+  animation: float4 12s ease-in-out infinite;
+}
+/* Custom star shape */
+.clip-star {
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+}
+
+/* Custom hexagon shape */
+.clip-hexagon {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.icon:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease-in-out;
+}
+.dropdown {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}

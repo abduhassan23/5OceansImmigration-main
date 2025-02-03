@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongo_container
+    ports:
+      - "27017:27017"  # Expose MongoDB port
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: amadouamos
+      MONGO_INITDB_ROOT_PASSWORD: 13hpFgo8bhslozQ6
+    restart: always  # Automatically restart the MongoDB container if it crashes
+    volumes:
+      - mongodb_data:/data/db  # Persist MongoDB data
+
+  pdf_app:
+    build:
+      context: .
+    container_name: pdf_app_container
+    ports:
+      - "8000:8000"  # Map port 8000 on the host to port 8000 in the container
+    volumes:
+      - ./public:/app/public  # Volume to persist public files like generated PDFs
+    depends_on:
+      - mongodb  # Ensure MongoDB starts before the PDF app
+    command: ["/app/.venv/bin/python", "/app/api/trigger_script.py"]  # Correct entry point for the script
+    restart: always  # Automatically restart the PDF app if it crashes
+    environment:
+      - DATABASE_URL=mongodb://amadouamos:13hpFgo8bhslozQ6@mongodb:27017/5OceansImmigration  # Connect to MongoDB within Docker network
+      - GOOGLE_APPLICATION_CREDENTIALS=config/firebase-adminsdk.json  # Path to Firebase credentials file
+
+volumes:
+  mongodb_data:

@@ -1,0 +1,28 @@
+.upload-container.dark-mode {
+    background-color: #0f192b;
+    color: #ffffff;
+  }
+  
+  /* Additional styles for the theme */
+  .upload-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+/* upload.css */
+.upload-button {
+    position: relative;
+  }
+  
+  .upload-icon {
+    transition: filter 0.3s ease;
+  }
+  
+  .upload-button:hover .upload-icon {
+    filter: invert(1); /* This inverts the colors, making the SVG white */
+  }
+  
+  

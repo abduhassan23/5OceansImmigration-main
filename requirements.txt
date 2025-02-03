@@ -1,0 +1,5 @@
+flask
+pymongo[srv]
+firebase-admin
+PyMuPDF
+flask_cors
